@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <title>PA_div_contenteditable.html</title>
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"/>
+    <meta HTTP-EQUIV="expires" CONTENT="-1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=100" >
+</head>
+<body>
+
+<p><button>精简</button></p>
+
+<div contenteditable="true" style="width:100%; height:600px;border:1px solid #CCC;"></div>
+
+<script type="text/javascript">
+<!--
+window.onload = function(){
+	document.getElementsByTagName('button')[0].onclick = function(){
+		var m_objContent = document.getElementsByTagName('div')[0]
+		var m_strContent = m_objContent.innerHTML;
+		m_strContent = m_strContent.replace(/ style=".*?"/gi, '');
+		m_strContent = m_strContent.replace(/ class=".*?"/gi, '');
+		m_strContent = m_strContent.replace(/ height=".*?"/gi, '');
+		m_objContent.innerHTML = m_strContent;
+		alert('Done.');
+	}
+}
+//-->
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="Generator" content="EditPlus®">
+	<title>PA_js_Yg-view-blog-code.html</title>
+</head>
+<body>
+
+<p><textarea id="txtSource" rows="15" cols="180"></textarea></p>
+<p>
+	<input type="button" value="EncodeUBB" onclick="PA_js_doEncodeUBB();">
+</p>
+<p><textarea id="txtDisplay" rows="15" cols="180"></textarea></p>
+
+<script type="text/javascript">
+<!--
+
+var A_objInterface = [
+	document.getElementById('txtSource'),
+	document.getElementById('txtDisplay')];
+
+function PA_js_doEncodeUBB(){
+	var strSource = A_objInterface[0].value;
+	var strDisplay = strSource.replace(/[[]([\w\d])]/gi, '[ $1 ]').replace(/>/g, '&gt;').replace(/</g, '&lt;')
+	A_objInterface[1].value = strDisplay;
+}
+
+//-->
+</script>
+
+
+</body>
+</html>

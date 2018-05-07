@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="Generator" content="EditPlus®">
+<title>To Single Line XML String</title>
+<style>
+textarea{ width:750px; height:300px; }
+</style>
+</head>
+<body>
+
+<h1>To Single Line XML String</h1>
+
+<dl>
+	<dt>Source</dt>
+	<dd><textarea></textarea></dd>
+	<dd>
+		<input type="button" value="Do Convert">
+		<label><input type="checkbox">Single Line</label>
+	</dd>
+	<dt>target</dt>
+	<dd><textarea></textarea></dd>
+</dl>
+
+<script type="text/javascript">
+<!--
+var textareas = document.getElementsByTagName("textarea");
+var inputs = document.getElementsByTagName("input");
+
+inputs[0].onclick = function(){
+	var strSource = textareas[0].value;
+	var strTarget = strSource;
+
+	strTarget = strTarget.replace(/^\s*(.*)\s*$/g, '$1');
+	if(inputs[1].checked) strTarget = strTarget.replace(/[\r\n]/g, '');
+	strTarget = strTarget.replace(/"/g, '\\"');
+
+	textareas[1].value = strTarget;
+}
+//-->
+</script>
+</body>
+</html>

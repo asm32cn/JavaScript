@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="Generator" content="EditPlus®">
+<title>PA_hs_filterReportXmlData.html</title>
+<style>
+textarea { width:900px; height: 200px; }
+</style>
+</head>
+<body>
+
+<h1>PA_hs_filterReportXmlData.html</h1>
+
+<dl>
+	<dt>txtSource</dt>
+	<dd><textarea></textarea></dd>
+	<dt>txtTarget</dt>
+	<dd><textarea></textarea></dd>
+	<dd><input type="button" value="Do Filter Report Xml Data" /></dd>
+</dl>
+
+<script>
+var textareas = document.getElementsByTagName('textarea');
+document.getElementsByTagName('input')[0].onclick = function(){
+	var strMatch = textareas[0].value.match(/\\\\\\"Value\\\\\\":\\\\\\(.*?)\\\\\\",\\\\\\"ErrorMsg\\\\\\":/gi);
+	textareas[1].value = "";
+	if(strMatch){
+		var strTarget = strMatch[0].substring(18, strMatch[0].length-22);
+		textareas[1].value = '<?xml version="1.0" encoding="utf-8" ?>\n' + strTarget.replace(/\\\//g, '/');
+	}
+}
+</script>
+
+</body>
+</html>

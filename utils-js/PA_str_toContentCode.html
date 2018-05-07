@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="Generator" content="EditPlus®">
+<title>To Content Code String</title>
+<style>
+textarea{ width:750px; height:300px; }
+</style>
+</head>
+<body>
+
+<h1>To Content Code String</h1>
+
+<dl>
+	<dt>Source</dt>
+	<dd><textarea></textarea></dd>
+	<dd>
+		<input type="button" value="Do Convert &quot; Sring">
+		<input type="button" value="Do Convert ' String">
+		<input type="button" value="Do HTML encode">
+		<input type="button" value="Convert To JS ' String">
+	</dd>
+	<dt>target</dt>
+	<dd><textarea></textarea></dd>
+</dl>
+
+<script type="text/javascript">
+<!--
+var textareas = document.getElementsByTagName("textarea");
+var inputs = document.getElementsByTagName("input");
+
+function JS_js_getConvert(strContent, c){
+	var re = new RegExp(c, 'g');
+	// var replace = '\\' + c
+	// if(c === "'") 
+	// strTarget = strTarget.replace(/\\/g, '\\\\')
+	// strTarget = strTarget.replace(re, replace);
+	return strContent.replace(/\\/g, '\\\\').replace(re, '\\' + c);
+}
+
+function PA_js_doConvert(c){
+	textareas[1].value = JS_js_getConvert(textareas[0].value, c);
+}
+
+inputs[0].onclick = function(){
+	PA_js_doConvert('"')
+}
+
+inputs[1].onclick = function(){
+	PA_js_doConvert("'")
+}
+
+inputs[2].onclick = function(){
+	var strSource = textareas[0].value;
+	var strTarget = strSource;
+	strTarget = strTarget.replace(/&/g, '&amp')
+			.replace(/"/g, '&quot;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt')
+	textareas[1].value = strTarget;
+}
+
+inputs[3].onclick = function(){
+	textareas[1].value = '\'' + JS_js_getConvert(textareas[0].value, "'").split('\n').join("\\n'+\n'") + '\'';
+}
+
+//-->
+</script>
+</body>
+</html>

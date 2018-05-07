@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="Generator" content="EditPlus®">
+	<title>PA_js_unEscape.html</title>
+</head>
+<body>
+
+<p><textarea id="txtSource" rows="10" cols="120"></textarea></p>
+<p>
+	<input type="button" value="unescape" onclick="PA_js_doUnEscape();">
+	<input type="button" value="unpack" onclick="PA_js_doUnPack();">
+	<input type="button" value="↑" onclick="PA_js_toSource();">
+	<input type="button" value="←" onclick="PA_js_rollBack();">
+</p>
+<p><textarea id="txtDisplay" rows="10" cols="120"></textarea></p>
+
+<script type="text/javascript">
+<!--
+
+var A_objInterface = [
+	document.getElementById('txtSource'),
+	document.getElementById('txtDisplay')];
+
+function PA_strStack(){
+	var A_strCache = [];
+	var strCache = '';
+	this.push = function(s){
+		if(s != strCache){
+			strCache = s;
+			A_strCache.push(s);
+		}
+	}
+
+	this.pop = function(){
+		if( A_strCache.length > 0 ){
+			strCache = A_strCache.pop();
+		}
+		return strCache;
+	}
+}
+
+var pss = new PA_strStack();
+
+function PA_js_doUnEscape(){
+	pss.push(A_objInterface[0].value);
+	A_objInterface[1].value = unescape(A_objInterface[0].value);
+}
+
+function PA_js_doUnPack(){
+	try{
+		pss.push(A_objInterface[0].value);
+		A_objInterface[1].value = eval(A_objInterface[0].value);
+	}catch(e){
+		alert(e)
+	}
+}
+
+function PA_js_toSource(){
+	pss.push(A_objInterface[0].value);
+	A_objInterface[0].value = A_objInterface[1].value;
+}
+
+function PA_js_rollBack(){
+	A_objInterface[0].value = pss.pop();
+}
+
+//-->
+</script>
+
+
+</body>
+</html>
