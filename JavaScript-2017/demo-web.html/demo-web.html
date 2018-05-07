@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>设置科目体系</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="generator" content="editplus" />
+<meta name="author" content="www.asm32.net" />
+<meta name="keywords" content="web ui" />
+<link href="css/globals.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<ul id="divRootMenu">
+  <li>页面设置</li>
+  <li>打印</li>
+  <li>预览</li>
+  <li>导出</li>
+  <li class="expandable">增加</li>
+  <li>科目块</li>
+  <li>删除</li>
+  <li class="expandable">栏目</li>
+  <li>块分裂</li>
+  <li class="expandable">模版</li>
+  <li>复制</li>
+  <li class="expandable">粘贴</li>
+  <li>块宽度</li>
+</ul>
+<dl id="dlSelectPanel">
+  <dt> 年度
+    <input id="txtSelectYear" type="text" value="2015" onFocus="this.select()" />
+    <input id="btnSelectYear" type="button" value="…">
+    &nbsp;
+    <input id="chkSelectDisabled" type="checkbox" value="1" checked="checked" />
+    <label for="chkSelectDisabled">显示停用科目</label>
+  </dt>
+  <dd> 科目代码定位:
+    <input id="txtSelectCode" type="text">
+  </dd>
+</dl>
+<dl id="dlClassSelectTab">
+  <dt>
+    <ul>
+      <li class="selected">资产类</li>
+      <li>负债类</li>
+      <li>所有者权益</li>
+      <li>成本类</li>
+      <li>损益类</li>
+      <li>辅助</li>
+      <li>全部</li>
+    </ul>
+  </dt>
+  <dd>
+    <ul id="ulTabContentPanes">
+      <li class="selected">
+        <!-- <dl class="expandable">
+          <dt>1001</dt>
+          <dd>库存现金</dd>
+        </dl>
+        <dl class="expandable">
+          <dt>1002</dt>
+          <dd>银行存款
+            <div class="divSubMenu">
+              <dl class="dlTreeItem2 expandable"><dt>01</dt><dd>交通银行</dd></dl>
+              <dl class="dlTreeItem3 expandable"><dt>02</dt><dd>中国银行</dd></dl>
+              <dl class="dlTreeItem3 expandable"><dt>03</dt><dd>贵阳银行
+                  <div class="divSubMenu">
+                    <dl class="dlTreeItem2"><dt>01</dt><dd>齐兴支行</dd></dl>
+                    <dl class="dlTreeItem4"><dt>02</dt><dd>虹桥支行</dd></dl>
+                  </div>
+                </dd>
+              </dl>
+              <dl class="dlTreeItem3 expandable"><dt>04</dt><dd>兴业银行</dd></dl>
+              <dl class="dlTreeItem3 expandable"><dt>05</dt><dd>光大银行</dd></dl>
+              <dl class="dlTreeItem4 expandable"><dt>06</dt><dd>建设银行</dd></dl>
+            </div>
+          </dd>
+        </dl>
+        <dl class="expandable">
+          <dt>1012</dt>
+          <dd>其他货币资金
+            <div class="divSubMenu">
+				<dl class="dlTreeItem2 expandable"><dt>04</dt><dd>信用卡</dd></dl>
+				<dl class="dlTreeItem3 expandable"><dt>05</dt><dd>信用保证金</dd></dl>
+				<dl class="dlTreeItem4 expandable"><dt>07</dt><dd>保函押金
+					<div class="divSubMenu">
+						<dl class="dlTreeItem1 expandable"><dt>01</dt><dd>保证金账户
+                        	<div class="divSubMenu2">
+	                            <dl class="dlTreeItem1"><dt>01</dt><dd>贵州电网公司2012年…</dd></dl>
+	                            <dl><dt>02</dt><dd>普定农场110KV变电站…</dd></dl>
+	                            <dl><dt>03</dt><dd>110KV锦屏2号主变扩…</dd></dl>
+	                            <dl><dt>04</dt><dd>贵州电网公司2012年…</dd></dl>
+	                            <dl><dt>05</dt><dd>贵州电网公司2012年…</dd></dl>
+	                            <dl><dt>06</dt><dd>贵州织金三塘风电场…</dd></dl>
+	                            <dl><dt>07</dt><dd>贵阳客运东站(1396)</dd></dl>
+	                            <dl><dt>08</dt><dd>贵州省贵阳市国家税…</dd></dl>
+                            </div>
+                        </dd></dl>
+					</div>
+				</dd></dl>
+			</div>
+          </dd>
+        </dl>
+        <dl>
+          <dt>1013</dt>
+          <dd>备用金</dd>
+        </dl>
+        <dl>
+          <dt>1101</dt>
+          <dd>交易性金融资产</dd>
+        </dl>
+        <dl>
+          <dt>1121</dt>
+          <dd>应收票据</dd>
+        </dl>
+        <dl>
+          <dt>1123</dt>
+          <dd>预付账款</dd>
+        </dl>
+        <dl>
+          <dt>1131</dt>
+          <dd>应收股利</dd>
+        </dl>
+        <dl>
+          <dt>1132</dt>
+          <dd>应收利息</dd>
+        </dl>
+        <dl>
+          <dt>1221</dt>
+          <dd>其他应收款</dd>
+        </dl>
+        <dl>
+          <dt>1231</dt>
+          <dd>坏账准备</dd>
+        </dl>
+        <dl>
+          <dt>1303</dt>
+          <dd>委托贷款</dd>
+        </dl>
+        <dl>
+          <dt>1304</dt>
+          <dd>委托贷款损失准备</dd>
+        </dl>
+        <dl>
+          <dt>1402</dt>
+          <dd>材料采购</dd>
+        </dl>
+        <dl>
+          <dt>1403</dt>
+          <dd>原材料</dd>
+        </dl>
+        <dl>
+          <dt>1471</dt>
+          <dd>融资租赁资产</dd>
+        </dl>
+        <dl>
+          <dt></dt>
+          <dd></dd>
+        </dl>
+		 -->
+      </li>
+      <li>负债类 页面</li>
+      <li>所有者权益 页面</li>
+      <li>成本类 页面</li>
+      <li>损益类 页面</li>
+      <li>辅助 页面</li>
+      <li>全部 页面</li>
+    </ul>
+  </dd>
+</dl>
+<div style="clear:both;">
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+111
+</div>
+<script type="text/javascript" src="js/js__common.js"></script>
+<script type="text/javascript" src="js/menu-defined-main.js"></script>
+
+<div id="divPopupContainer"></div>
+
+</body>
+</html>
