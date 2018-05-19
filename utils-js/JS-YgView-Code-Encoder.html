@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>JS-YgView-Code-Encoder.html</title>
+<style>
+textarea{width:800px;height:200px;}
+</style>
+</head>
+<body>
+
+
+<textarea></textarea>
+
+<p>
+	<button>YgView-Code-Encoder</button>
+</p>
+
+<textarea></textarea>
+
+
+<script>
+(function(){
+	var textareas = document.getElementsByTagName('textarea');
+	var buttons = document.getElementsByTagName('button');
+
+	function _encoder(s){
+		return s.replace(/\[/g, "[ ").replace(/\]/g, ' ]').replace(/&/g, '&amp;').replace(/>/g, '&gt;').replace(/</g, '&lt;');
+	}
+
+	buttons[0].onclick = function(){
+		var strContent = textareas[0].value;
+		textareas[1].value = _encoder(strContent);
+	}
+})();
+</script>
+</body>
+</html>
