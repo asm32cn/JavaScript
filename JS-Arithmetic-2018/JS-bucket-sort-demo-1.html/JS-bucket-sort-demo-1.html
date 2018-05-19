@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="Generator" content="EditPlus®">
+<title>JS-bucket-sort-demo-1.html</title>
+</head>
+<body>
+
+<h1>JS-bucket-sort-demo-1.html</h1>
+
+<p></p>
+<p><button>bucket-sort-demo-1</button></p>
+<p></p>
+
+<script>
+
+function JS_bucket_sort_demo_1(){
+	var MAX = 100;
+	var bn = 5;
+	var nFactor = parseInt(MAX % bn ? MAX / bn + 1 : MAX / bn);
+	var C = new Array(bn);
+
+	this.displayData = function(data){
+		var s = '';
+		if(data){
+			s = data.join(', ');
+		}
+		return s;
+	}
+
+	function CountingSort(data){
+
+		function MapToBucket(x){
+			return parseInt(x / nFactor);
+		}
+
+		var n = data.length;
+
+		for(var i = 0; i < bn; i++){
+			C[i] = 0;
+		}
+		for(var i = 0; i < n; i++){
+			C[MapToBucket(data[i])]++;
+		}
+		for(var i = 1; i < bn; i++){
+			C[i] += C[i - 1];
+		}
+		var B = new Array(n);
+		for(var i = n - 1; i >= 0; i--){
+			var b = MapToBucket(data[i]);
+			B[--C[b]] = data[i];
+		}
+		for(var i = 0; i < n; i++){
+			data[i] = B[i];
+		}
+	}
+
+	function InsertionSort(data, left, right){
+		for(var i = left + 1; i <= right; i++){
+			var get = data[i];
+			var j = i - 1;
+			while(j >= left && data[j] > get){
+				data[j + 1] = data[j];
+				j--;
+			}
+			data[j + 1] = get;
+		}
+	}
+
+	this.BucketSort = function(data){
+		var n = data.length;
+		CountingSort(data);
+		for(var i = 0; i < bn; i++){
+			var left = C[i];
+			var right = (i == bn - 1) ? n - 1 : C[i + 1] - 1;
+			if(left < right){
+				InsertionSort(data, left, right);
+			}
+		}
+	}
+}
+
+(function(){
+	var oDisplays = document.getElementsByTagName('p');
+	var oExecute = oDisplays[1].getElementsByTagName('button')[0];
+
+	// var _source = Array(41, 67, 34, 0, 69, 24, 78, 58, 62, 64, 5, 45, 81, 27, 61, 91, 95, 42, 27, 36);
+	var _source = Array(76, 11, 11, 43, 78, 35, 39, 27, 16, 55, 1, 41, 24, 19, 54, 7, 78, 69, 65, 82);
+	var bsd = new JS_bucket_sort_demo_1();
+
+	oDisplays[0].innerHTML = bsd.displayData(_source);
+
+	var _result;
+
+	function JS_showResult(){
+		oDisplays[2].innerHTML = bsd.displayData(_result);
+		oExecute.disabled = false;
+	}
+
+	oExecute.onclick = function(){
+		oExecute.disabled = true;
+		_result = [];
+		for(var i = 0, l = _source.length; i < l; i++){
+			_result.push(_source[i]);
+		}
+		oDisplays[2].innerHTML = '...';
+		bsd.BucketSort(_result);
+
+		setTimeout(JS_showResult, 100);
+	}
+
+})();
+</script>
+
+</body>
+</html>
