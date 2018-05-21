@@ -1,0 +1,38 @@
+<html>
+<style>
+textarea{width:800px;height:200px;}
+</style>
+<body>
+
+
+<textarea></textarea>
+
+<p>
+<input type="text" />
+</p>
+
+<script>
+(function(){
+	var textareas = document.getElementsByTagName('textarea');
+	var inputs = document.getElementsByTagName('input');
+
+	function _dbs(s){
+		return s.replace(/'/g, "''");
+	}
+
+	function _dbi(s){
+		var i = 0;
+		try{
+			i = parseInt(s);
+		}catch(e){}
+		return i;
+	}
+
+	inputs[0].onchange = function(){
+		var strQuery = "select username, flag from table_user where username='" + _dbi(inputs[0].value) + "'";
+		textareas[0].value = strQuery;
+	}
+})();
+</script>
+</body>
+</html>
