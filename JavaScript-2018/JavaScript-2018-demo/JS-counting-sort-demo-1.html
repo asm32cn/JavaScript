@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+<title>JS-counting-sort-demo-1.html</title>
+<style>
+ul { list-style:none; float:left; clear:both; margin: 10px 5px; padding:0px; }
+li{display:block; width:30px; height:30px; padding:5px; margin:3px; text-align:center; line-height:30px; border:1px solid #666; border-radius:50%; float:left; }
+li.mark { background-color:#069; color:#ff0; }
+li.changed { background-color:#06f; color:#ff0; }
+p { clear:both; }
+span { display:none; font-size:300px; font-family: 'Arial Black'; position: absolute; left:550px; top: 50px; color: #069; }
+</style>
+</head>
+<body>
+
+<h1>JS-counting-sort-demo-1.html</h1>
+
+<span>KO</span>
+<ul></ul>
+<ul></ul>
+<ul></ul>
+<ul></ul>
+<script>
+(function(){
+	var _source = [76, 11, 11, 43, 78, 35, 39, 27, 16, 55, 1, 41, 24, 19, 54, 7, 78, 69, 65, 82];
+	var nCount = _source.length;
+	var data = new Array(nCount);
+	var B = new Array(nCount);
+	var C = [0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 4, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 16, 17, 17, 19, 19, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20];
+
+	for(var i = 0; i < nCount; i++){
+		data[i] = _source[i];
+		B[i] = '';
+	}
+	var uls = document.getElementsByTagName('ul');
+	var _spanKO = document.getElementsByTagName('span')[0];
+
+	function JS_showData(oParent, data, nLine, marked){
+		var lis = [];
+		for(var i = 0, l = data.length; i < l; i++){
+			var _li = document.createElement('li');
+			if(i % nLine == 0) _li.style.clear = 'both';
+			_li.innerHTML = data[i] || '';
+			lis.push(_li);
+			oParent.appendChild(_li);
+		}
+		if(marked){
+			if(typeof(marked) == 'object' && marked.length){
+				for(var i = 0, l = marked.length; i < l; i++){
+					lis[marked[i]].className = 'mark';
+				}
+			}
+		}
+	}
+
+	function JS_reloadData(oParent, data, marked){
+		var lis = oParent.getElementsByTagName('li');
+		for(var i = 0, l = data.length; i < l; i++){
+			var v = lis[i].innerHTML;
+			if(v != data[i]){
+				lis[i].innerHTML = data[i] || '';
+				lis[i].className = 'changed';
+			}else{
+				lis[i].removeAttribute('class');
+			}
+		}
+		if(marked){
+			if(typeof(marked) == 'object' && marked.length){
+				for(var i = 0, l = marked.length; i < l; i++){
+					var o = lis[marked[i]];
+					if(o.className != 'changed'){
+						o.className = 'mark';
+					}
+				}
+			}
+		}
+	}
+
+	JS_showData(uls[0], C, 10, _source);
+
+	JS_showData(uls[1], data, 20);
+
+	JS_showData(uls[2], data, 20);
+
+	JS_showData(uls[3], B, 20);
+
+	var n = data.length;
+	var nInterval = null;
+	function ReloadData(){
+		n--;
+		B[--C[data[n]]] = data[n];
+		data[n] = 0;
+		JS_reloadData(uls[0], C, _source);
+		JS_reloadData(uls[2], data);
+		JS_reloadData(uls[3], B);
+		if(n == 0){
+			clearInterval(nInterval);
+			_spanKO.style.display = 'block';
+		}
+	}
+	nInterval = setInterval(ReloadData, 200);
+
+})();
+</script>
+
+</body>
+</html>
