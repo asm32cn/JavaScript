@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="Generator" content="EditPlus®">
+<title>JS-bubblesort-demo-1.html</title>
+</head>
+<body>
+
+<h1>JS-bubblesort-demo-1.html</h1>
+
+<p></p>
+<p><button>bubblesort-demo-1</button></p>
+<p></p>
+
+<script>
+
+function JS_bubblesort_demo_1(){
+
+	this.displayData = function(data){
+		var s = '';
+		if(data){
+			s = data.join(', ');
+		}
+		return s;
+	}
+
+	this.BubbleSort = function(data){
+		var n = data.length;
+		for(var j = 0; j < n - 1; j++){
+			for(var i = 0; i < n - 1 - j; i++){
+				if(data[i] > data[i + 1]){
+					var temp = data[i];
+					data[i] = data[i + 1];
+					data[i + 1] = temp;
+				}
+			}
+		}
+	}
+}
+
+(function(){
+	var oDisplays = document.getElementsByTagName('p');
+	var oExecute = oDisplays[1].getElementsByTagName('button')[0];
+
+	// var _source = Array(41, 67, 34, 0, 69, 24, 78, 58, 62, 64, 5, 45, 81, 27, 61, 91, 95, 42, 27, 36);
+	var _source = Array(76, 11, 11, 43, 78, 35, 39, 27, 16, 55, 1, 41, 24, 19, 54, 7, 78, 69, 65, 82);
+	var bsd = new JS_bubblesort_demo_1();
+
+	oDisplays[0].innerHTML = bsd.displayData(_source);
+
+	var _result;
+
+	function JS_showResult(){
+		oDisplays[2].innerHTML = bsd.displayData(_result);
+		oExecute.disabled = false;
+	}
+
+	oExecute.onclick = function(){
+		oExecute.disabled = true;
+		_result = [];
+		for(var i = 0, l = _source.length; i < l; i++){
+			_result.push(_source[i]);
+		}
+		oDisplays[2].innerHTML = '...';
+		bsd.BubbleSort(_result);
+
+		setTimeout(JS_showResult, 100);
+	}
+
+})();
+</script>
+
+</body>
+</html>
