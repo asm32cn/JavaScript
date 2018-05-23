@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="Generator" content="EditPlus®">
+<title>JS-cocktailsort-demo-1.html</title>
+</head>
+<body>
+
+<h1>JS-cocktailsort-demo-1.html</h1>
+
+<p></p>
+<p><button>cocktailsort-demo-1</button></p>
+<p></p>
+
+<script>
+
+function JS_cocktailsort_demo_1(){
+
+	this.displayData = function(data){
+		var s = '';
+		if(data){
+			s = data.join(', ');
+		}
+		return s;
+	}
+
+	this.CocktailSort = function(data){
+
+		function Swap(i, j){
+			var temp = data[i];
+			data[i] = data[j];
+			data[j] = temp;
+		}
+
+		var left = 0;
+		var right = data.length - 1;
+		while(left < right){
+			for(var i = left; i < right; i++){
+				if(data[i] > data[i + 1]){
+					Swap(i, i + 1);
+				}
+			}
+			right--;
+			for(var i = right; i > left; i--){
+				if(data[i - 1] > data[i]){
+					Swap(i - 1, i);
+				}
+			}
+			left++;
+		}
+	}
+}
+
+(function(){
+	var oDisplays = document.getElementsByTagName('p');
+	var oExecute = oDisplays[1].getElementsByTagName('button')[0];
+
+	// var _source = Array(41, 67, 34, 0, 69, 24, 78, 58, 62, 64, 5, 45, 81, 27, 61, 91, 95, 42, 27, 36);
+	var _source = Array(76, 11, 11, 43, 78, 35, 39, 27, 16, 55, 1, 41, 24, 19, 54, 7, 78, 69, 65, 82);
+	var csd = new JS_cocktailsort_demo_1();
+
+	oDisplays[0].innerHTML = csd.displayData(_source);
+
+	var _result;
+
+	function JS_showResult(){
+		oDisplays[2].innerHTML = csd.displayData(_result);
+		oExecute.disabled = false;
+	}
+
+	oExecute.onclick = function(){
+		oExecute.disabled = true;
+		_result = [];
+		for(var i = 0, l = _source.length; i < l; i++){
+			_result.push(_source[i]);
+		}
+		oDisplays[2].innerHTML = '...';
+		csd.CocktailSort(_result);
+
+		setTimeout(JS_showResult, 100);
+	}
+
+})();
+</script>
+
+</body>
+</html>
