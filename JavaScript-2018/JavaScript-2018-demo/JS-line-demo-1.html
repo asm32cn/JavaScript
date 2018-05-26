@@ -1,0 +1,29 @@
+<html>
+<head>
+<style>
+.js-line { position:relative; border-top:1px solid #666; height:0px; }
+</style>
+</head>
+<body>
+
+<script>
+function JS_Line(x1, y1, x2, y2){
+	var o = document.createElement('div');
+	var dx = x2 - x1;
+	var dy = y2 - y1;
+	var w = parseInt( Math.sqrt( dx * dx + dy * dy ) );
+	// var r = dy == 0 ? 0 : Math.asin(dx / dy).toFixed(3);
+	// var r = dy == 0 ? 0 : (3.14 * Math.atan(dx / dy)).toFixed(3);
+	var r = dy == 0 ? 0 : (3.14 * 10).toFixed(3);
+	console.log(dy, dx, dy / dx, Math.atan(dx / dy), Math.atan(dx / dy).toFixed(3), r);
+	o.className = 'js-line';
+	o.style.cssText = 'width:' + w + 'px; left: ' + x1 +  'px; top: ' + y1 + 'px; transform: rotate(' + r + 'deg);' ;
+	document.body.appendChild(o);
+}
+
+JS_Line(100, 100, 500, 300);
+</script>
+
+</body>
+</html>
+
