@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="Generator" content="EditPlus®">
+<title>JS-counting-sort-demo-1.html</title>
+</head>
+<body>
+
+<h1>JS-counting-sort-demo-1.html</h1>
+
+<p></p>
+<p><button>counting-sort-demo-1</button></p>
+<p></p>
+
+<script>
+
+function JS_counting_sort_demo_1(){
+
+	var K = 100;
+	var C = new Array(K);
+
+	this.displayData = function(data){
+		var s = '';
+		if(data){
+			s = data.join(', ');
+		}
+		return s;
+	}
+
+	this.CountingSort = function(data){
+		var n = data.length;
+
+		for(var i = 0; i < K; i++){
+			C[i] = 0;
+		}
+		for(var i = 0; i < n; i++){
+			C[data[i]]++;
+		}
+		for(var i = 1; i < K; i++){
+			C[i] += C[i - 1];
+		}
+		var B = new Array(n);
+		for(var i = n - 1; i >= 0; i--){
+			B[--C[data[i]]] = data[i];
+		}
+		for(var i = 0; i < n; i++){
+			data[i] = B[i];
+		}
+	}
+}
+
+(function(){
+	var oDisplays = document.getElementsByTagName('p');
+	var oExecute = oDisplays[1].getElementsByTagName('button')[0];
+
+	// var _source = Array(41, 67, 34, 0, 69, 24, 78, 58, 62, 64, 5, 45, 81, 27, 61, 91, 95, 42, 27, 36);
+	var _source = Array(76, 11, 11, 43, 78, 35, 39, 27, 16, 55, 1, 41, 24, 19, 54, 7, 78, 69, 65, 82);
+	var csd = new JS_counting_sort_demo_1();
+
+	oDisplays[0].innerHTML = csd.displayData(_source);
+
+	var _result;
+
+	function JS_showResult(){
+		oDisplays[2].innerHTML = csd.displayData(_result);
+		oExecute.disabled = false;
+	}
+
+	oExecute.onclick = function(){
+		oExecute.disabled = true;
+		_result = [];
+		for(var i = 0, l = _source.length; i < l; i++){
+			_result.push(_source[i]);
+		}
+		oDisplays[2].innerHTML = '...';
+		csd.CountingSort(_result);
+
+		setTimeout(JS_showResult, 100);
+	}
+
+})();
+</script>
+
+</body>
+</html>
