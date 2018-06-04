@@ -45,14 +45,14 @@ function JS_insertion_sort_demo_1(){
 
 	// var _data = Array(41, 67, 34, 0, 69, 24, 78, 58, 62, 64, 5, 45, 81, 27, 61, 91, 95, 42, 27, 36);
 	var _data = Array(76, 11, 11, 43, 78, 35, 39, 27, 16, 55, 1, 41, 24, 19, 54, 7, 78, 69, 65, 82);
-	var csd = new JS_insertion_sort_demo_1();
+	var isd = new JS_insertion_sort_demo_1();
 
-	oDisplays[0].innerHTML = csd.displayData(_data);
+	oDisplays[0].innerHTML = isd.displayData(_data);
 
 	var _result;
 
 	function JS_showResult(){
-		oDisplays[2].innerHTML = csd.displayData(_result);
+		oDisplays[2].innerHTML = isd.displayData(_result);
 		oExecute.disabled = false;
 	}
 
@@ -63,7 +63,7 @@ function JS_insertion_sort_demo_1(){
 			_result.push(_data[i]);
 		}
 		oDisplays[2].innerHTML = '...';
-		csd.InsertionSort(_result);
+		isd.InsertionSort(_result);
 
 		setTimeout(JS_showResult, 100);
 	}
