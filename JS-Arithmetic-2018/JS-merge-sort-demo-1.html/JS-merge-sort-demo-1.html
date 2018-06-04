@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="Generator" content="EditPlus速">
+<title>JS-merge-sort-demo-1.html</title>
+</head>
+<body>
+
+<h1>JS-merge-sort-demo-1.html</h1>
+
+<p></p>
+<p>
+	<button>merge-sort-recursion-demo-1</button>
+	<button>merge-sort-iteration-demo-1</button>
+</p>
+<p></p>
+
+<script>
+
+function JS_merge_sort_demo_1(){
+
+	this.displayData = function(data){
+		var s = '';
+		if(data){
+			s = data.join(', ');
+		}
+		return s;
+	}
+
+	function Merge(data, nLeft, nMid, nRight){
+		var nLen = nRight - nLeft + 1;
+		var temp = new Array(nLen);
+		var nIndex = 0;
+		var i = nLeft;
+		var j = nMid + 1;
+		while(i <= nMid && j <= nRight){
+			temp[nIndex++] = data[i] <= data[j] ? data[i++] : data[j++];
+		}
+		while(i <= nMid){
+			temp[nIndex++] = data[i++]
+		}
+		while(j <= nRight){
+			temp[nIndex++] = data[j++];
+		}
+		for(var k = 0; k < nLen; k++){
+			data[nLeft++] = temp[k];
+		}
+	}
+
+	// 递归实现的归并排序(自顶向下)
+	this.MergeSortRecursion = function(data, nLeft, nRight){
+		// 当待排序的序列长度为1时，递归开始回溯，进行merge操作
+		if(nLeft == nRight) return;
+
+		var nMid = parseInt((nLeft + nRight) / 2);
+		this.MergeSortRecursion(data, nLeft, nMid);
+		this.MergeSortRecursion(data, nMid + 1, nRight);
+		Merge(data, nLeft, nMid, nRight);
+	}
+
+	// 非递归(迭代)实现的归并排序(自底向上)
+	this.MergeSortIteration = function(data){
+		// 子数组索引，前一个为A[nLeft ... nMid]，后一个为A[nMid + 1 ... nRight]
+		var nLen = data.length;
+		// 子数组的大小i初始为1，每轮翻倍
+		for(var i = 1; i < nLen; i *= 2){
+			var nLeft = 0;
+			// 后一个子数组存在(需要归并)
+			while(nLeft + i < nLen){
+				var nMid = nLeft + i - 1;
+				// 后一个子数组大小可能不够
+				nRight = nMid + i < nLen ? nMid + i : nLen - 1;
+				Merge(data, nLeft, nMid, nRight);
+				// 前一个子数组索引向后移动
+				nLeft = nRight + 1;
+			}
+		}
+	}
+}
+
+(function(){
+	var oDisplays = document.getElementsByTagName('p');
+	var oExecutes = oDisplays[1].getElementsByTagName('button');
+
+	// var _data = Array(41, 67, 34, 0, 69, 24, 78, 58, 62, 64, 5, 45, 81, 27, 61, 91, 95, 42, 27, 36);
+	var _data = Array(76, 11, 11, 43, 78, 35, 39, 27, 16, 55, 1, 41, 24, 19, 54, 7, 78, 69, 65, 82);
+	var msd = new JS_merge_sort_demo_1();
+
+	oDisplays[0].innerHTML = msd.displayData(_data);
+
+	var _result;
+
+	function JS_showResult(){
+		oDisplays[2].innerHTML = msd.displayData(_result);
+		oExecutes[0].disabled = false;
+		oExecutes[1].disabled = false;
+	}
+
+	function JS_reloadSource(){
+		oExecutes[0].disabled = true;
+		oExecutes[1].disabled = true;
+		_result = [];
+		for(var i = 0, l = _data.length; i < l; i++){
+			_result.push(_data[i]);
+		}
+		oDisplays[2].innerHTML = '...';
+	}
+
+	oExecutes[0].onclick = function(){
+		JS_reloadSource();
+		msd.MergeSortRecursion(_result, 0, _result.length - 1);
+
+		setTimeout(JS_showResult, 100);
+	}
+
+	oExecutes[1].onclick = function(){
+		JS_reloadSource();
+		msd.MergeSortIteration(_result);
+
+		setTimeout(JS_showResult, 100);
+	}
+
+})();
+</script>
+
+</body>
+</html>
