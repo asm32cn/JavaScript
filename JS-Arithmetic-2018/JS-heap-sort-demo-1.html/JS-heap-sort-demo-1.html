@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="Generator" content="EditPlus®">
+<title>JS-heap-sort-demo-1.html</title>
+</head>
+<body>
+
+<h1>JS-heap-sort-demo-1.html</h1>
+
+<p></p>
+<p><button>heap-sort-demo-1</button></p>
+<p></p>
+
+<script>
+
+function JS_heap_sort_demo_1(){
+
+	this.displayData = function(data){
+		var s = '';
+		if(data){
+			s = data.join(', ');
+		}
+		return s;
+	}
+
+	function Swap(data, i, j){
+		var temp = data[i];
+		data[i] = data[j];
+		data[j] = temp;
+	}
+
+	function Heapify(data, i, nSize){
+		var nLeftChild = 2 * i + 1;
+		var nRightChild = 2 * i + 2;
+		var nMax = i;
+		if(nLeftChild < nSize && data[nLeftChild] > data[nMax]){
+			nMax = nLeftChild;
+		}
+		if(nRightChild < nSize && data[nRightChild] > data[nMax]){
+			nMax = nRightChild;
+		}
+		if(nMax != i){
+			Swap(data, i, nMax);
+			Heapify(data, nMax, nSize);
+		}
+	}
+
+	this.HeapSort = function(data){
+		var nHeapSize = data.length;
+		// BuildHeap
+		for(var i = parseInt(nHeapSize / 2) - 1; i >= 0; i--){
+			Heapify(data, i, nHeapSize);
+		}
+		// HeapSort
+		while(nHeapSize > 1){
+			Swap(data, 0, --nHeapSize);
+			Heapify(data, 0, nHeapSize);
+		}
+	}
+}
+
+(function(){
+	var oDisplays = document.getElementsByTagName('p');
+	var oExecute = oDisplays[1].getElementsByTagName('button')[0];
+
+	// var _data = Array(41, 67, 34, 0, 69, 24, 78, 58, 62, 64, 5, 45, 81, 27, 61, 91, 95, 42, 27, 36);
+	var _data = Array(76, 11, 11, 43, 78, 35, 39, 27, 16, 55, 1, 41, 24, 19, 54, 7, 78, 69, 65, 82);
+	var csd = new JS_heap_sort_demo_1();
+
+	oDisplays[0].innerHTML = csd.displayData(_data);
+
+	var _result;
+
+	function JS_showResult(){
+		oDisplays[2].innerHTML = csd.displayData(_result);
+		oExecute.disabled = false;
+	}
+
+	oExecute.onclick = function(){
+		oExecute.disabled = true;
+		_result = [];
+		for(var i = 0, l = _data.length; i < l; i++){
+			_result.push(_data[i]);
+		}
+		oDisplays[2].innerHTML = '...';
+		csd.HeapSort(_result);
+
+		setTimeout(JS_showResult, 100);
+	}
+
+})();
+</script>
+
+</body>
+</html>
