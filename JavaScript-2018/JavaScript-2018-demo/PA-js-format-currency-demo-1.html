@@ -13,10 +13,9 @@
 				var t = parseFloat(s).toFixed(2);
 				var lt = t.length;
 				if(lt > 6){
-					var offset = lt % 3;
-					var l = lt - 6;
-					var i, r = t.substr(0, offset);
-					for(i = offset; i < l; i+= 3){
+					var st = lt % 3;
+					var i, l, r = t.substr(0, st);
+					for(i = st, l = lt - 6; i < l; i+= 3){
 						if(i) r += ',';
 						r += t.substr(i, 3);
 					}
@@ -56,6 +55,7 @@
 		style.borderCollapse = 'collapse';
 	}
 	for(var i = 0, l = data.length; i < l; i++){
+		console.log(i);
 		var _tr = document.createElement('tr');
 		var _tds = [document.createElement('td'), document.createElement('td'), document.createElement('td')];
 		for(var j = 0; j < 3; j++){
@@ -69,7 +69,7 @@
 				case 2:
 					v = PA_FormatCurrency(data[i]); break;
 			}
-			_td.innerHTML = v;
+			_td.innerHTML = '' + v;
 			_tr.appendChild(_td);
 		}
 		_table.append(_tr);
