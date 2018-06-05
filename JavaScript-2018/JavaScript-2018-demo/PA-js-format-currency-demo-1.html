@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>PA-js-format-currency-demo-1.html</title>
+</head>
+<body>
+<script>
+
+(function(){
+	function PA_FormatCurrency(s){
+		var r = s;
+		if(/^[\d.,]+$/.test(s)){
+			try{
+				var t = parseFloat(s).toFixed(2);
+				var lt = t.length;
+				if(lt > 6){
+					var offset = lt % 3;
+					var l = lt - 6;
+					var i, r = t.substr(0, offset);
+					for(i = offset; i < l; i+= 3){
+						if(i) r += ',';
+						r += t.substr(i, 3);
+					}
+					r += ',' + t.substr(i, 6);
+				}else{
+					r = t;
+				}
+			}catch(e){
+				r = s;
+			}
+		}
+		return r;
+	}
+
+
+	// function test(s){
+	// 	console.log(s, parseFloat(s).toFixed(2), PA_FormatCurrency(s));
+	// }
+	// test('3.140009');		// 3.140009 3.14 3.14
+	// test('123456.5678');	// 123456.5678 123456.57 123,456.57
+	// test('1234567.5678');	// 1234567.5678 1234567.57 1,234,567.57
+	// test('12345678.5678');	// 12345678.5678 12345678.57 12,345,678.57
+	// test('123456789.5678');	// 123456789.5678 123456789.57 123,456,789.57
+	// test('111113');			// 111113 111113.00 111,113.00
+	// test('aa');				// aa NaN aa
+	// test(null);				// null "NaN" null
+	// test('');				//  NaN 
+	// test('/');				// / NaN /
+
+	var data = ['3.140009', '123456.5678', '1234567.5678', '12345678.5678', '123456789.5678', '111113', 'aa', null, '', '/'];
+	var _table = document.createElement('table');
+	with(_table){
+		border = 1;
+		cellSpacing = 0;
+		cellPadding = 3;
+		borderColor = '#666';
+		style.borderCollapse = 'collapse';
+	}
+	for(var i = 0, l = data.length; i < l; i++){
+		var _tr = document.createElement('tr');
+		var _tds = [document.createElement('td'), document.createElement('td'), document.createElement('td')];
+		for(var j = 0; j < 3; j++){
+			var _td = document.createElement('td');
+			var v;
+			switch(j){
+				case 0:
+					v = data[i]; break;
+				case 1:
+					v = parseFloat(data[i]).toFixed(2); break;
+				case 2:
+					v = PA_FormatCurrency(data[i]); break;
+			}
+			_td.innerHTML = v;
+			_tr.appendChild(_td);
+		}
+		_table.append(_tr);
+	}
+	document.body.appendChild(_table);
+
+})();
+</script>
+</body>
+</html>
