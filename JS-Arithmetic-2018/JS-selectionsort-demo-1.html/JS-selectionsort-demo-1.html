@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="Generator" content="EditPlus®">
+<title>JS-selectionsort-demo-1.html</title>
+</head>
+<body>
+
+<h1>JS-selectionsort-demo-1.html</h1>
+
+<p></p>
+<p><button>selectionsort-demo-1</button></p>
+<p></p>
+
+<script>
+
+function JS_selection_sort_demo_1(){
+
+	this.displayData = function(data){
+		var s = '';
+		if(data){
+			s = data.join(', ');
+		};
+
+		return s
+	}
+
+	this.SelectionSort = function(data){
+		var n = data.length;
+		for(var i = 0; i < n - 1; i++){
+			var nMin = i;
+			for(var j = i + 1; j < n; j++){
+				if(data[j] < data[nMin]){
+					nMin = j;
+				}
+			}
+			if(nMin != i){
+				var temp = data[i];
+				data[i] = data[nMin];
+				data[nMin] = temp;
+			}
+		}
+	}
+}
+
+(function(){
+	var oDisplays = document.getElementsByTagName('p');
+	var oExecute = oDisplays[1].getElementsByTagName('button')[0];
+
+	// var _data = Array(41, 67, 34, 0, 69, 24, 78, 58, 62, 64, 5, 45, 81, 27, 61, 91, 95, 42, 27, 36);
+	var _data = Array(76, 11, 11, 43, 78, 35, 39, 27, 16, 55, 1, 41, 24, 19, 54, 7, 78, 69, 65, 82);
+	var ssd = new JS_selection_sort_demo_1();
+
+	oDisplays[0].innerHTML = ssd.displayData(_data);
+
+	var _result;
+
+	function JS_showResult(){
+		oDisplays[2].innerHTML = ssd.displayData(_result);
+		oExecute.disabled = false;
+	}
+
+	oExecute.onclick = function(){
+		oExecute.disabled = true;
+		_result = [];
+		for(var i = 0, l = _data.length; i < l; i++){
+			_result.push(_data[i]);
+		}
+		oDisplays[2].innerHTML = '...';
+		ssd.SelectionSort(_result);
+
+		setTimeout(JS_showResult, 100);
+	}
+
+})();
+</script>
+
+</body>
+</html>
