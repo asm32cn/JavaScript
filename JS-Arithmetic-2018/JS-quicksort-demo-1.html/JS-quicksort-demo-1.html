@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="Generator" content="EditPlus®">
+<title>JS-quicksort-demo-1.html</title>
+</head>
+<body>
+
+<h1>JS-quicksort-demo-1.html</h1>
+
+<p></p>
+<p><button>quicksort-demo-1</button></p>
+<p></p>
+
+<script>
+
+function JS_quicksort_demo_1(){
+
+	this.displayData = function(data){
+		var s = '';
+		if(data){
+			s = data.join(', ');
+		};
+
+		return s	}
+
+	this.QuickSort = function(data, nLeft, nRight){
+		if(nLeft < nRight){
+			var nKey = data[nLeft];
+			var nLow = nLeft;
+			var nHigh = nRight;
+			while(nLow < nHigh){
+				while(nLow < nHigh && data[nHigh] >= nKey){
+					nHigh--;
+				}
+				data[nLow] = data[nHigh];
+				while(nLow < nHigh && data[nLow] <= nKey){
+					nLow++;
+				}
+				data[nHigh] = data[nLow];
+			}
+			data[nLow] = nKey;
+
+			this.QuickSort(data, nLeft, nLow - 1);
+			this.QuickSort(data, nLow + 1, nRight);
+		}
+	}
+}
+
+(function(){
+	var oDisplays = document.getElementsByTagName('p');
+	var oExecute = oDisplays[1].getElementsByTagName('button')[0];
+
+	// var _data = Array(41, 67, 34, 0, 69, 24, 78, 58, 62, 64, 5, 45, 81, 27, 61, 91, 95, 42, 27, 36);
+	var _data = Array(76, 11, 11, 43, 78, 35, 39, 27, 16, 55, 1, 41, 24, 19, 54, 7, 78, 69, 65, 82);
+	var qsd = new JS_quicksort_demo_1();
+
+	oDisplays[0].innerHTML = qsd.displayData(_data);
+
+	var _result;
+
+	function JS_showResult(){
+		oDisplays[2].innerHTML = qsd.displayData(_result);
+		oExecute.disabled = false;
+	}
+
+	oExecute.onclick = function(){
+		oExecute.disabled = true;
+		_result = [];
+		for(var i = 0, l = _data.length; i < l; i++){
+			_result.push(_data[i]);
+		}
+		oDisplays[2].innerHTML = '...';
+		qsd.QuickSort(_result, 0, _result.length - 1);
+
+		setTimeout(JS_showResult, 100);
+	}
+
+})();
+</script>
+
+</body>
+</html>
