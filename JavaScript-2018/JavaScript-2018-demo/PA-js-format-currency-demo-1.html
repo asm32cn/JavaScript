@@ -8,13 +8,15 @@
 (function(){
 	function PA_FormatCurrency(s){
 		var r = s;
-		if(/^[\d.,]+$/.test(s)){
+		if(/^[-]?[\d.,]+$/.test(s)){
 			try{
-				var t = parseFloat(s).toFixed(2);
+				var f = parseFloat(s)
+				var t = (f < 0 ? -f : f).toFixed(2);
 				var lt = t.length;
 				if(lt > 6){
 					var st = lt % 3;
-					var i, l, r = t.substr(0, st);
+					var i, l;
+					r = t.substr(0, st);
 					for(i = st, l = lt - 6; i < l; i+= 3){
 						if(i) r += ',';
 						r += t.substr(i, 3);
@@ -23,6 +25,7 @@
 				}else{
 					r = t;
 				}
+				if(f < 0) r = '-' + r;
 			}catch(e){
 				r = s;
 			}
@@ -45,7 +48,7 @@
 	// test('');				//  NaN 
 	// test('/');				// / NaN /
 
-	var data = ['3.140009', '123456.5678', '1234567.5678', '12345678.5678', '123456789.5678', '111113', 'aa', null, '', '/'];
+	var data = ['3.140009', '123456.5678', '1234567.5678', '12345678.5678', '123456789.5678', '-123456789.5678', '111113', 'aa', null, '', '/', 12345, -12345, 12345.678, -12345.678];
 	var _table = document.createElement('table');
 	with(_table){
 		border = 1;
