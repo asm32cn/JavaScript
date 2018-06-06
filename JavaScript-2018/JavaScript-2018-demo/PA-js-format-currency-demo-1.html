@@ -8,29 +8,49 @@
 (function(){
 	function PA_FormatCurrency(s){
 		var r = s;
-		// if(/^[-]?[\d.,]+$/.test(s)){
 		if(/^[-]?\d*(.\d+)?$/.test(s)){
 			var f = parseFloat(s)
 			if(!isNaN(f)){
-				// try{
-					var t = (f < 0 ? -f : f).toFixed(2);
-					var lt = t.length;
-					if(lt > 6){
-						var st = lt % 3;
-						var i, l;
-						r = t.substr(0, st);
-						for(i = st, l = lt - 6; i < l; i+= 3){
-							if(i) r += ',';
-							r += t.substr(i, 3);
-						}
-						r += ',' + t.substr(i, 6);
-					}else{
-						r = t;
+				var t = (f < 0 ? -f : f).toFixed(2);
+				var lt = t.length;
+				if(lt > 6){
+					var st = lt % 3;
+					var i, l;
+					r = t.substr(0, st);
+					for(i = st, l = lt - 6; i < l; i+= 3){
+						if(i) r += ',';
+						r += t.substr(i, 3);
 					}
-					if(f < 0) r = '-' + r;
-				// }catch(e){
-				// 	r = s;
-				// }
+					r += ',' + t.substr(i, 6);
+				}else{
+					r = t;
+				}
+				if(f < 0) r = '-' + r;
+			}
+		}
+		return r;
+	}
+
+	function PA_FormatCurrencyEx(s){
+		var r = s;
+		if(/^[-]?\d*(.\d+)?$/.test(s)){
+			var f = parseFloat(s)
+			if(!isNaN(f)){
+				var t = (f < 0 ? -f : f).toFixed(2);
+				var lt = t.length;
+				if(lt > 6){
+					var st = lt % 3;
+					var i, la = [];
+					if(st) la.push(t.substr(0, st));
+					for(i = st, n = lt - 6; i < n; i += 3){
+						la.push(t.substr(i, 3));
+					}
+					la.push(t.substr(i, 6));
+					r = la.join(',');
+				}else{
+					r = t;
+				}
+				if(f < 0) r = '-' + r;
 			}
 		}
 		return r;
@@ -55,7 +75,8 @@
 		'12345678.5678', '123456789.5678', '-123456789.5678',
 		'111113', 'aa', null, '', '/', 12345, -12345,
 		12345.678, -12345.678, .123, -.123, '.456', '-.456',
-		'123aaa', '-123aaa', '.123aa', '-.123aa', 0, -0, '0', '-0', '-'];
+		'123aaa', '-123aaa', '.123aa', '-.123aa', 0, -0, '0', '-0',
+		'-', '0xa0'];
 	var _table = document.createElement('table');
 	with(_table){
 		border = 1;
@@ -68,7 +89,7 @@
 		console.log(i);
 		var _tr = document.createElement('tr');
 		var _tds = [document.createElement('td'), document.createElement('td'), document.createElement('td')];
-		for(var j = 0; j < 3; j++){
+		for(var j = 0; j < 5; j++){
 			var _td = document.createElement('td');
 			_td.align = 'right';
 			var v;
@@ -76,9 +97,13 @@
 				case 0:
 					v = data[i]; break;
 				case 1:
-					v = parseFloat(data[i]).toFixed(2); break;
+					v = typeof(data[i]); break;
 				case 2:
+					v = parseFloat(data[i]).toFixed(2); break;
+				case 3:
 					v = PA_FormatCurrency(data[i]); break;
+				case 4:
+					v = PA_FormatCurrencyEx(data[i]); break;
 			}
 			_td.innerHTML = '' + v;
 			_tr.appendChild(_td);
