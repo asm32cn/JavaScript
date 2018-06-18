@@ -1,0 +1,36 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>JS-Whac-A-Mole.html</title>
+<style>
+.pt { position:absolute; z-index:-1; width:30px; height:30px; background-color:#069; border-radius:50%; }
+</style>
+</head>
+
+<body>
+
+<div id="divMain"></div>
+
+<script>
+(function(){
+	var divMain = document.getElementById('divMain');
+	var pt = document.createElement('div');
+	var pos = document.createElement('span');
+	var d = document;
+	pos.style.cssText = 'position:absolute; right:10px; top:10px;';
+	pt.className = 'pt';
+	divMain.appendChild(pt);
+
+	d.body.appendChild(pos);
+
+	d.onmousedown = function(e){
+		console.log(e);
+		pos.innerHTML = '(screenX: ' + e.screenX + ', screenY: ' + e.screenY + ', clientX: ' + e.clientX + ', clientY: ' + e.clientY + ')';
+		pt.style.cssText = 'left:' + (e.clientX - 15) + 'px; top:' + (e.clientY - 15) + 'px;'
+		//debugger;
+	}
+})();
+</script>
+
+</body>
+</html>
