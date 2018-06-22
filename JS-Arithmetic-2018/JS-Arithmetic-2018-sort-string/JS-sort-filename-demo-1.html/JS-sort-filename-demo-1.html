@@ -4,72 +4,105 @@
 <head>
 <meta charset="UTF-8">
 <meta name="Generator" content="EditPlus®">
-<title>TIOBE Index</title>
+<title>JS-sort-filename-demo-1.html</title>
+<style>
+	#divMain { width: 100%; }
+	#divMain dl { width: 50%; float: left;}
+	#divMain dl dt { font-size: 18px; font-weight: bold; color:#069; }
+</style>
 </head>
 <body>
 
 <h1>JS-sort-filename-demo-1.html</h1>
 
+<p>sort filename by date</p>
+
 <script>
 
-
-var A_strFiles = [
-	'TIOBE Index for April 2018.html',
-	'TIOBE Index for February 2018.html',
-	'TIOBE Index for January 2018.html',
-	'TIOBE Index for June 2018.html',
-	'TIOBE Index for March 2018.html',
-	'TIOBE Index for May 2018.html',
-	'TIOBE-exchange-matrix-data.html',
-	'TIOBE-exchange-matrix-data.py',
-	'TIOBE-gernate-index-py2.py',
-	'TIOBE-index.html',
-	'TIOBE_matrixData.txt'];
-
-function Sort_TIOBE_files(list){
-
-	var _month = {'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6,
-		'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12};
-
-	// init buffer
-	var buff = [];
-	var _regex = /^TIOBE Index for (\w+) (\d{4})\.html$/;
+(function(){
+	var A_strFiles = [
+		'TIOBE Index for April 2018.html',
+		'TIOBE Index for February 2018.html',
+		'TIOBE Index for January 2018.html',
+		'TIOBE Index for June 2018.html',
+		'TIOBE Index for March 2018.html',
+		'TIOBE Index for May 2018.html',
+		'TIOBE-exchange-matrix-data.html',
+		'TIOBE-exchange-matrix-data.py',
+		'TIOBE-gernate-index-py2.py',
+		'TIOBE-index.html',
+		'TIOBE_matrixData.txt'];
 	var nCount = A_strFiles.length;
-	for(var i = 0, n = 0; i < nCount; i++){
-		var m = A_strFiles[i].match(_regex);
-		buff.push([i, i, (m ? parseInt(m[2]) * 100 + (_month[m[1]] || 0) : ++n) ]);
-		console.log(A_strFiles[i], buff[i]);
-	}
+	var _body = document.body;
 
-	function getIndex(i){
-		return buff[buff[i][0]][1];
-	}
+	function Sort_TIOBE_files(list){
 
-	function getData(i){
-		return buff[buff[i][0]][2];
-	}
+		var _month = {'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6,
+			'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12};
 
-	// sort
-	for(var i = 0; i < nCount - 1; i++){
-		var nMin = getIndex(i);
-		for(var j = i + 1; j < nCount; j++){
-			if(getData(j) < getData(nMin)){
-				nMin = j;
+		// init buffer
+		var buff = [];
+		var _regex = /^TIOBE Index for (\w+) (\d{4})\.html$/;
+		for(var i = 0, n = 0; i < nCount; i++){
+			var m = A_strFiles[i].match(_regex);
+			buff.push([i, i, (m ? parseInt(m[2]) * 100 + (_month[m[1]] || 0) : ++n) ]);
+		}
+
+
+		function getIndex(i){
+			return buff[i][1];
+		}
+
+		function getData(i){
+			return buff[getIndex(i)][2];
+		}
+
+		// insertion sort
+		for(var i = 0; i < nCount - 1; i++){
+			var nMin = i;
+			for(var j = i + 1; j < nCount; j++){
+				if(getData(j) < getData(nMin)){
+					nMin = j;
+				}
+			}
+			if(i != nMin){
+				var t = buff[i][1];
+				buff[i][1] = buff[nMin][1];
+				buff[nMin][1] = t;
 			}
 		}
-		if(nMin != i){
-			var t = buff[i][1];
-			buff[i][1] = buff[nMin][1];
-			buff[nMin][1] = t;
+
+		var _list = [];
+		for(var i = 0; i < nCount; i++){
+			_list.push(A_strFiles[getIndex(i)]);
 		}
+		return _list;
 	}
 
-	for(var i = 0; i < nCount; i++){
-		console.log(A_strFiles[getIndex(i)]);
+	var files = Sort_TIOBE_files(A_strFiles);
+	var data = [['Source Data', A_strFiles], ['Sorted Data', files]];
+	var _div = document.createElement('div');
+	_div.id = 'divMain';
+	for(var c = 0; c < 2; c++){
+		var _dl = document.createElement('dl');
+		var _dt = document.createElement('dt');
+		var _dd = document.createElement('dd');
+		var _ul = document.createElement('ul');
+		_dt.innerHTML = data[c][0];
+		for(var i = 0; i < nCount; i++){
+			var _li = document.createElement('li');
+			_li.innerHTML = data[c][1][i];
+			_ul.appendChild(_li);
+		}
+		_dl.appendChild(_dt);
+		_dd.appendChild(_ul);
+		_dl.appendChild(_dd);
+		_div.appendChild(_dl);
 	}
-}
 
-Sort_TIOBE_files(A_strFiles);
+	_body.appendChild(_div);
+
+})();
 
 </script>
 
