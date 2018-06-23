@@ -6,6 +6,7 @@
 <meta name="Generator" content="EditPlus®">
 <title>JS-sort-filename-demo-1.html</title>
 <style>
+	body { background-color: #a5cbf7; }
 	#divMain { width: 100%; }
 	#divMain dl { width: 50%; float: left;}
 	#divMain dl dt { font-size: 18px; font-weight: bold; color:#069; }
@@ -53,6 +54,10 @@
 			return buff[i][1];
 		}
 
+		function setIndex(i, n){
+			buff[i][1] = n;
+		}
+
 		function getData(i){
 			return buff[getIndex(i)][2];
 		}
@@ -66,9 +71,9 @@
 				}
 			}
 			if(i != nMin){
-				var t = buff[i][1];
-				buff[i][1] = buff[nMin][1];
-				buff[nMin][1] = t;
+				var t = getIndex(i);
+				setIndex(i, getIndex(nMin));
+				setIndex(nMin, t);
 			}
 		}
 
@@ -80,6 +85,8 @@
 	}
 
 	var files = Sort_TIOBE_files(A_strFiles);
+
+	// display data
 	var data = [['Source Data', A_strFiles], ['Sorted Data', files]];
 	var _div = document.createElement('div');
 	_div.id = 'divMain';
