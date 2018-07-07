@@ -19,7 +19,10 @@ textarea { width: 750px; height: 200px; }
 	<dd><textarea></textarea></dd>
 </dl>
 <dl>
-	<dd><button>To Commands</button></dd>
+	<dd>
+		<button>Add Commands</button>
+		<button>Modify Commands</button>
+	</dd>
 </dl>
 
 <dl>
@@ -32,19 +35,24 @@ textarea { width: 750px; height: 200px; }
 (function(){
 	var textareas = document.getElementsByTagName('textarea');
 	var buttons = document.getElementsByTagName('button');
-	buttons[0].onclick = function(){
+
+	function PA_gernateGitCommand(sAct){
 		var _files = textareas[0].value.split('\n');
 		var strCommands = '';
 		for(var i = 0, l = _files.length; i < l; i++){
 			var strFile = _files[i].replace(/^\s+|\s+$/g, '');
 			if(strFile){
 				strCommands += 'git add ' + strFile + '\n' +
-					'git commit -m "' + strFile + ' ... add"\n' +
+					'git commit -m "' + strFile + ' ... ' + sAct + '"\n' +
 					'git push\n\n'
 			}
 		}
 		textareas[1].value = strCommands;
 	}
+
+	buttons[0].onclick = function(){ PA_gernateGitCommand("add"); }
+	buttons[1].onclick = function(){ PA_gernateGitCommand("modify"); }
+
 })();
 //-->
 </script>
