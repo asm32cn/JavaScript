@@ -3,7 +3,18 @@
 <head>
 <title>JS-Whac-A-Mole.html</title>
 <style>
-.pt { position:absolute; z-index:-1; width:30px; height:30px; background-color:#069; border-radius:50%; }
+
+body{ overflow: hidden; background-color: #a5cbf7; }
+
+#divGrid { display:block; margin:50px auto; padding:0px; width:600px; height: 600px; /*border:1px solid #069;*/ }
+#divGrid li { display:block; margin:0px; padding:0px; float:left; width:148px; height: 148px;
+	list-style:none; border:1px solid #069; border-radius:5px; }
+#divGrid li.marked::before { content:'☣'; display:block; width:148px; height:148px; line-height:148px;
+	font-size:100px; text-align:center; color: #069; }
+
+#divCircle { position:absolute; z-index: -1; border:1px solid #069; border-radius: 50%; color:#06f; }
+
+.pt { position:absolute; z-index:-1; left:5px; top:5px; width:30px; height:30px; background-color:#069; border-radius:50%; display:none; }
 </style>
 </head>
 
@@ -13,20 +24,86 @@
 
 <script>
 (function(){
+
+	function _DCE(sTag, sId, sClass){
+		var o = document.createElement(sTag);
+		if(sId) o.id = sId;
+		if(sClass) o.className = sClass;
+		return o;
+	}
+
+	var nIntervalID;
+	function _circle(x, y){
+		var sId = 'divCircle';
+		var o = document.getElementById(sId)
+		if(!o){
+			o = _DCE('div', sId);
+			_body.appendChild(o);
+		}
+		var r = 30;
+
+		_clearInterval();
+
+		function _clearInterval(){
+			if(nIntervalID){
+				clearInterval(nIntervalID);
+				nIntervalID = null;
+			}
+		}
+		function circleDisplay(){
+			o.style.cssText = 'left:' + (x - r) + 'px; top:' + (y - r) + 'px; width:' + r * 2 + 'px; height:' + r * 2 + 'px;';
+			r += 10;
+			if(nIntervalID && r > 300){
+				o.style.display = 'none';
+				_clearInterval();
+				pt.style.cssText='display: none;';
+			}
+		}
+		nIntervalID = setInterval(circleDisplay, 20);
+	}
+
+	var nCountX = 4,
+		nCountY = 4,
+		nCount = nCountX * nCountY;
+
 	var divMain = document.getElementById('divMain');
-	var pt = document.createElement('div');
-	var pos = document.createElement('span');
-	var d = document;
+	var _body = document.body;
+	var A_objCells = Array(nCount);
+
+	var pt = _DCE('div', null, 'pt');
+	var pos = _DCE('span');
+	var divGrid = _DCE('ul', 'divGrid');
+	for(var i = 0; i < nCount; i++){
+		A_objCells[i] = _DCE('li');
+		divGrid.appendChild( A_objCells[i] );
+	}
+	divMain.appendChild(divGrid);
+
+	function putMarkedItem(){
+		var nMarked = parseInt(Math.random() * 16);
+		for(var i = 0; i < nCount; i++){
+			if(i == nMarked){
+				A_objCells[i].className = 'marked';
+			}else{
+				A_objCells[i].removeAttribute('class');
+			}
+		}
+		// console.log(nMarked)
+	}
+
+	setInterval(putMarkedItem, 1000);
+
 	pos.style.cssText = 'position:absolute; right:10px; top:10px;';
-	pt.className = 'pt';
 	divMain.appendChild(pt);
 
-	d.body.appendChild(pos);
+	_body.appendChild(pos);
 
-	d.onmousedown = function(e){
-		console.log(e);
-		pos.innerHTML = '(screenX: ' + e.screenX + ', screenY: ' + e.screenY + ', clientX: ' + e.clientX + ', clientY: ' + e.clientY + ')';
-		pt.style.cssText = 'left:' + (e.clientX - 15) + 'px; top:' + (e.clientY - 15) + 'px;'
+	document.onmousedown = function(e){
+		// console.log(e);
+		var clientX = e.clientX, clientY = e.clientY;
+		pos.innerHTML = '(screenX: ' + e.screenX + ', screenY: ' + e.screenY + ', clientX: ' + clientX + ', clientY: ' + clientY + ')';
+		pt.style.cssText = 'left:' + (clientX - 15) + 'px; top:' + (clientY - 15) + 'px; display: block;'
+		_circle( clientX, clientY );
 		//debugger;
 	}
 })();
