@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>JS-convert-text-to-html-data.html</title>
+<meta name="generator" content="editplus" />
+<style>
+textarea { width: 750px; height: 200px; }
+</style>
+</head>
+
+<body>
+
+
+<h1>JS-convert-text-to-html-data.html</h1>
+
+
+<dl>
+	<dt>txtSource</dt>
+	<dd><textarea></textarea></dd>
+</dl>
+<dl>
+	<dd>
+		<button>doConvert</button>
+	</dd>
+</dl>
+
+<dl>
+	<dt>txtResult</dt>
+	<dd><textarea></textarea></dd>
+</dl>
+
+<script type="text/javascript">
+<!--
+(function(){
+	var textareas = document.getElementsByTagName('textarea');
+	var buttons = document.getElementsByTagName('button');
+
+	function JS_htmlEncode(s){
+		return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+	}
+
+	function PA_doConvert(){
+		var _lines = textareas[0].value.split('\n');
+		var strResult = '<table border="1" borderColor="#000" cellspacing="0" cellpadding="3" style="border-collapse:collapse;">\n';
+		for(var i = 0, l = _lines.length; i < l; i++){
+			var _cells = _lines[i].split('\t');
+			strResult += '\t<tr>\n';
+			for(var j = 0; j < _cells.length; j++){
+				strResult += '\t\t<td>' + JS_htmlEncode(_cells[j]) + '</td>\n';
+			}
+			strResult += '\t</tr>\n';
+		}
+		strResult += '</table>\n';
+		textareas[1].value = strResult;
+	}
+
+	buttons[0].onclick = function(){ PA_doConvert(); }
+
+})();
+//-->
+</script>
+</body>
+</html>
