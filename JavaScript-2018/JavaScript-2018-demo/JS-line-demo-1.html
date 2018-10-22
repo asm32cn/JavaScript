@@ -1,12 +1,21 @@
 <html>
 <head>
 <style>
+.js-point { position:relative; border:1px solid #666; height:5px; width:5px; border-radius: 50%; }
 .js-line { position:relative; border-top:1px solid #666; height:0px; }
 </style>
 </head>
 <body>
 
 <script>
+
+function JS_Point(x, y){
+	var o = document.createElement('div');
+	o.className = 'js-point';
+	o.style.cssText = 'left:' + (x - 3) + 'px; top:' + (y - 3) + 'px;';
+	document.body.appendChild(o);
+}
+
 function JS_Line(x1, y1, x2, y2){
 	var o = document.createElement('div');
 	var dx = x2 - x1;
@@ -14,11 +23,22 @@ function JS_Line(x1, y1, x2, y2){
 	var w = parseInt( Math.sqrt( dx * dx + dy * dy ) );
 	// var r = dy == 0 ? 0 : Math.asin(dx / dy).toFixed(3);
 	// var r = dy == 0 ? 0 : (3.14 * Math.atan(dx / dy)).toFixed(3);
-	var r = dy == 0 ? 0 : (3.14 * 10).toFixed(3);
-	console.log(dy, dx, dy / dx, Math.atan(dx / dy), Math.atan(dx / dy).toFixed(3), r);
+	var PI = 3.141592653;
+	var rdg = dx == 0 ? PI / 2 : Math.atan(dy / dx);
+	var dx2 = 0;//parseInt(w * Math.cos(rdg) / 2);
+	var dy2 = parseInt(w * Math.sin(rdg) / 2);
+	var r = (rdg / PI * 180).toFixed(3);
+	console.log(r);
+	// console.log(dy, dx, dy / dx, , Math.atan(dy / dx).toFixed(3), r);
+
+	// r = 26;
+
 	o.className = 'js-line';
-	o.style.cssText = 'width:' + w + 'px; left: ' + x1 +  'px; top: ' + y1 + 'px; transform: rotate(' + r + 'deg);' ;
+	o.style.cssText = 'width:' + w + 'px; left: ' + (x1 - dx2) + 'px; top: ' + (y1 + dy2) + 'px; transform: rotate(' + r + 'deg);' ;
 	document.body.appendChild(o);
+
+	JS_Point(x1, y1);
+	JS_Point(x2, y2);
 }
 
 JS_Line(100, 100, 500, 300);
